@@ -1,20 +1,11 @@
-﻿using SE.TAO;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data.Linq;
-using SE.DAO;
-using SE.BUS;
-
-namespace SE
+﻿namespace SE
 {
-    enum FormType
+    using System;
+    using System.Windows.Forms;
+    using SE.BUS;
+    using SE.DTO;
+
+    public enum FormType
     {
         ADD, EDIT
     }
@@ -22,187 +13,198 @@ namespace SE
     public partial class ThemSuaSP : Form
     {
         private FormType type;
-        private SanPham sanpham;
-        private SanPhamDAO spDAO;
-        private ChiTietSanPhamDAO ctDAO;
-        private ThongTinSanPhamDAO ttDAO;
-        private LoaiSanPhamDAO loaiDAO;
-        private SanPhamBUS spBUS;
+        private SanPhamDTO sanpham;
+        private SanPhamBUS sanphamBUS;
+        private LoaiSPBUS loaiBUS;
+        private ChiTietSanPhamBUS ctspBUS;
+        private ThongTinSPBUS ttspBUS;
+
         public ThemSuaSP()
         {
-            InitializeComponent();
-            this.sanpham = new SanPham();
+            this.InitializeComponent();
+            this.sanpham = new SanPhamDTO();
             this.type = FormType.ADD;
-            this.loaiDAO = new LoaiSanPhamDAO();
-            this.spDAO = new SanPhamDAO();
+            this.loaiBUS = new LoaiSPBUS();
+            this.sanphamBUS = new SanPhamBUS();
         }
 
-        public ThemSuaSP(SanPham sp)
+        public ThemSuaSP(SanPhamDTO sp)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.type = FormType.EDIT;
             this.sanpham = sp;
-            this.ctDAO = new ChiTietSanPhamDAO();
-            this.ttDAO = new ThongTinSanPhamDAO();
-            this.loaiDAO = new LoaiSanPhamDAO();
-            this.spBUS = new SanPhamBUS();
-            this.spDAO = new SanPhamDAO();
+            this.loaiBUS = new LoaiSPBUS();
+            this.sanphamBUS = new SanPhamBUS();
+            this.ctspBUS = new ChiTietSanPhamBUS();
+            this.ttspBUS = new ThongTinSPBUS();
         }
 
         private void ThemSuaSP_Load(object sender, EventArgs e)
         {
-            cbxLoaiSanPham.Items.AddRange(this.loaiDAO.GetDSLoaiSP().ToArray());
+            this.cbxLoaiSanPham.Items.AddRange(this.loaiBUS.GetDSLoaiSP().ToArray());
             if (this.type == FormType.EDIT)
             {
-                lstvDSChiTiet.SetObjects(this.sanpham.ThongTinSanPhams);
-                tbxMaSanPham.Text = this.sanpham.MaSP.ToString();
-                tbxSoLuongTon.Text = this.sanpham.SoLuongTon.ToString();
-                tbxTenSanPham.Text = this.sanpham.TenSP;
-                int index = this.loaiDAO.GetDSLoaiSP().FindIndex(x => x.MaLoai == this.sanpham.MaLoai);
-                cbxLoaiSanPham.SelectedIndex = index;
-                btnHuy.Visible = false;
-                btnLuu.Location = btnHuy.Location;
+                this.lstvDSChiTiet.SetObjects(this.sanphamBUS.GetDSThongTinSP(this.sanpham.MaSP));
+                this.tbxMaSanPham.Text = this.sanpham.MaSP.ToString();
+                this.tbxSoLuongTon.Text = this.sanpham.SoLuongTon.ToString();
+                this.tbxTenSanPham.Text = this.sanpham.TenSP;
+                int index = this.loaiBUS.GetDSLoaiSP().FindIndex(x => x.MaLoai == this.sanpham.LoaiSP.MaLoai);
+                this.cbxLoaiSanPham.SelectedIndex = index;
+                this.btnHuy.Visible = false;
+                this.btnLuu.Location = this.btnHuy.Location;
             }
             else
             {
-                tbxMaSanPham.Text = (this.spDAO.GetDSSanPham().Count() + 1).ToString();
-                tbxSoLuongTon.Text = "0";
-                lstvDSChiTiet.SetObjects(null);
-                groupChiTietSP.Enabled = false;
+                this.tbxMaSanPham.Text = (this.sanphamBUS.GetMaSPMax() + 1).ToString();
+                this.tbxSoLuongTon.Text = "0";
+                this.lstvDSChiTiet.SetObjects(null);
+                this.groupChiTietSP.Enabled = false;
             }
         }
 
-        private void lstvDSChiTiet_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListDSChiTiet_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                ThongTinSanPham selected = lstvDSChiTiet.SelectedObject as ThongTinSanPham;
-                tbxKichThuoc.Text = selected.KichThuoc;
-                tbxMauSac.Text = selected.MauSac;
-                tbxDonGia.Text = selected.DonGia.ToString();
-                tbxSoLuongTon_CT.Text = selected.SoLuongTon.ToString();
-            } catch (Exception)
+                ThongTinSPDTO selected = (ThongTinSPDTO)this.lstvDSChiTiet.SelectedObject;
+                this.tbxKichThuoc.Text = selected.KichThuoc;
+                this.tbxMauSac.Text = selected.MauSac;
+                this.tbxDonGia.Text = selected.DonGia.ToString();
+                this.tbxSoLuongTonCT.Text = selected.SoLuongTon.ToString();
+            }
+            catch (Exception)
             {
-
             }
         }
 
-        private void btnThemChiTiet_Click(object sender, EventArgs e)
+        private void ButtonThemChiTiet_Click(object sender, EventArgs e)
         {
-            if (tbxKichThuoc.Text == "" || tbxMauSac.Text == "" || tbxDonGia.Text == "" || tbxSoLuongTon_CT.Text == "")
+            if (this.tbxKichThuoc.Text == string.Empty || this.tbxMauSac.Text == string.Empty || this.tbxDonGia.Text == string.Empty || this.tbxSoLuongTonCT.Text == string.Empty)
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
-            
 
-            SanPham updateSanPham = spDAO.GetSanPham(int.Parse(tbxMaSanPham.Text));
-            ThongTinSanPham thongtin = spDAO.GetThongTinSP(updateSanPham, tbxMauSac.Text, tbxKichThuoc.Text);
+            ThongTinSPDTO thongtin = this.sanphamBUS.GetThongTinSP(this.sanpham.MaSP, this.tbxMauSac.Text, this.tbxKichThuoc.Text);
             if (thongtin != null)
             {
                 var result = MessageBox.Show("Chi tiết này đã tồn tại, bạn có muốn cập nhật số lượng không?", "Thêm chi tiết", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    thongtin.SoLuongTon += int.Parse(tbxSoLuongTon_CT.Text);
-                    spDAO.SubmitChanges();
+                    this.sanphamBUS.TangSoLuongTon(this.sanpham.MaSP, thongtin.MauSac, thongtin.KichThuoc, int.Parse(this.tbxSoLuongTonCT.Text));
                 }
             }
             else
             {
-                thongtin = new ThongTinSanPham();
-                thongtin.ChiTietSanPham = ctDAO.GetChiTietSP(tbxMauSac.Text, tbxKichThuoc.Text);
-                thongtin.SoLuongTon = int.Parse(tbxSoLuongTon_CT.Text);
-                thongtin.DonGia = decimal.Parse(tbxDonGia.Text);
-                thongtin.SanPham = updateSanPham;
-                ttDAO.AddThongTinSP(thongtin);
-                ttDAO.SubmitChanges();
+                thongtin = new ThongTinSPDTO();
+                thongtin.MauSac = this.tbxMauSac.Text;
+                thongtin.KichThuoc = this.tbxKichThuoc.Text;
+                if (!this.ctspBUS.TonTaiChiTiet(thongtin.MauSac, thongtin.KichThuoc))
+                {
+                    this.ctspBUS.AddChiTietSP(thongtin.MauSac, thongtin.KichThuoc);
+                }
+
+                thongtin.SoLuongTon = int.Parse(this.tbxSoLuongTonCT.Text);
+                thongtin.DonGia = decimal.Parse(this.tbxDonGia.Text);
+                this.sanphamBUS.AddThongTinSanPham(this.sanpham.MaSP, thongtin);
             }
-            this.lstvDSChiTiet.SetObjects(spDAO.GetDSThongTinSP(updateSanPham));
-            spBUS.UpdateSoLuongTon(updateSanPham);
-            tbxSoLuongTon.Text = updateSanPham.SoLuongTon.ToString();
-            lstvDSChiTiet.Focus();
-            lstvDSChiTiet.SelectedIndex = 0;
+
+            this.sanphamBUS.TinhSoLuongTon(this.sanpham.MaSP);
+            this.sanpham = this.sanphamBUS.GetSanPham(this.sanpham.MaSP);
+            this.lstvDSChiTiet.SetObjects(this.sanphamBUS.GetDSThongTinSP(this.sanpham.MaSP));
+            this.tbxSoLuongTon.Text = this.sanpham.SoLuongTon.ToString();
+            this.lstvDSChiTiet.Focus();
+            this.lstvDSChiTiet.SelectedIndex = 0;
         }
 
-        private void btnSuaChiTiet_Click(object sender, EventArgs e)
+        private void ButtonSuaChiTiet_Click(object sender, EventArgs e)
         {
-            if (tbxKichThuoc.Text == "" || tbxMauSac.Text == "" || tbxDonGia.Text == "" || tbxSoLuongTon_CT.Text == "")
+            if (this.tbxKichThuoc.Text == string.Empty || this.tbxMauSac.Text == string.Empty || this.tbxDonGia.Text == string.Empty || this.tbxSoLuongTonCT.Text == string.Empty)
             {
                 return;
             }
+
             if (this.lstvDSChiTiet.SelectedObject == null)
             {
                 return;
             }
-            ThongTinSanPham selected = this.lstvDSChiTiet.SelectedObject as ThongTinSanPham;
-            SanPham updateSanPham = this.spDAO.GetSanPham(this.sanpham.MaSP);
-            bool keyChanged = (selected.MauSac != tbxMauSac.Text) || (selected.KichThuoc != tbxKichThuoc.Text);
+
+            ThongTinSPDTO selected = (ThongTinSPDTO)this.lstvDSChiTiet.SelectedObject;
+            bool keyChanged = (selected.MauSac != this.tbxMauSac.Text) || (selected.KichThuoc != this.tbxKichThuoc.Text);
             if (keyChanged)
             {
                 MessageBox.Show("Không được sửa màu sắc, kích thước!");
                 return;
             }
-            ThongTinSanPham updateThongtin = this.spDAO.GetThongTinSP(updateSanPham, selected.MauSac, selected.KichThuoc);
-            updateThongtin.DonGia = decimal.Parse(tbxDonGia.Text);
-            updateThongtin.SoLuongTon = int.Parse(tbxSoLuongTon_CT.Text);
-            this.spDAO.SubmitChanges();
-            this.spBUS.UpdateSoLuongTon(updateSanPham);
-            this.spDAO.SubmitChanges();
+
+            this.sanphamBUS.EditThongTinSanPham(
+                this.sanpham.MaSP, 
+                new ThongTinSPDTO
+            {
+                MauSac = selected.MauSac,
+                KichThuoc = selected.KichThuoc,
+                DonGia = decimal.Parse(this.tbxDonGia.Text),
+                SoLuongTon = int.Parse(this.tbxSoLuongTonCT.Text)
+            });
+
+            this.sanphamBUS.RefreshSanPham();
+            this.sanphamBUS.TinhSoLuongTon(this.sanpham.MaSP);
+            this.sanpham = this.sanphamBUS.GetSanPham(this.sanpham.MaSP);
             this.tbxSoLuongTon.Text = this.sanpham.SoLuongTon.ToString();
-            this.lstvDSChiTiet.SetObjects(updateSanPham.ThongTinSanPhams.ToList());
+            this.lstvDSChiTiet.SetObjects(this.sanphamBUS.GetDSThongTinSP(this.sanpham.MaSP));
         }
 
-        private void btnXoaChiTiet_Click(object sender, EventArgs e)
+        private void ButtonXoaChiTiet_Click(object sender, EventArgs e)
         {
-            if (lstvDSChiTiet.SelectedIndex < 0)
+            if (this.lstvDSChiTiet.SelectedIndex < 0)
             {
                 return;
             }
-            ThongTinSanPham selected = this.lstvDSChiTiet.SelectedObject as ThongTinSanPham;
-            SanPham updateSanPham = this.spDAO.GetSanPham(this.sanpham.MaSP);
+
+            ThongTinSPDTO selected = (ThongTinSPDTO)this.lstvDSChiTiet.SelectedObject;
             var result = MessageBox.Show("Bạn có muốn xóa chi tiết này?", "Xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                ThongTinSanPham deleteThongTin = this.spDAO.GetThongTinSP(updateSanPham, selected.MauSac, selected.KichThuoc);
-                this.ttDAO.DeleteThongTinSP(deleteThongTin);
-                this.ttDAO.SubmitChanges();
+                this.ttspBUS.DeleteThongTinSP(this.sanpham.MaSP, selected.MauSac, selected.KichThuoc);
             }
-            this.spBUS.UpdateSoLuongTon(updateSanPham);
-            this.spDAO.SubmitChanges();
+
+            this.sanphamBUS.RefreshSanPham();
+            this.sanphamBUS.TinhSoLuongTon(this.sanpham.MaSP);
+            this.sanpham = this.sanphamBUS.GetSanPham(this.sanpham.MaSP);
             this.tbxSoLuongTon.Text = this.sanpham.SoLuongTon.ToString();
-            this.lstvDSChiTiet.SetObjects(updateSanPham.ThongTinSanPhams.ToList());
+            this.sanpham = this.sanphamBUS.GetSanPham(this.sanpham.MaSP);
+            this.lstvDSChiTiet.SetObjects(this.sanpham.DSThongTin);
         }
 
-        private void btnHuy_Click(object sender, EventArgs e)
+        private void ButtonHuy_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void ThemSuaSP_FormClosing(object sender, FormClosingEventArgs e)
+        private void ButtonLuu_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnLuu_Click(object sender, EventArgs e)
-        {
-            LoaiSanPham selected = cbxLoaiSanPham.SelectedItem as LoaiSanPham;
+            LoaiSPDTO selected = (LoaiSPDTO)this.cbxLoaiSanPham.SelectedItem;
             if (this.type == FormType.ADD)
             {
-                this.sanpham.MaSP = int.Parse(tbxMaSanPham.Text);
-                this.sanpham.TenSP = tbxTenSanPham.Text;
-                this.sanpham.SoLuongTon = int.Parse(tbxSoLuongTon.Text);
-                this.sanpham.LoaiSanPham = this.loaiDAO.GetLoaiSP(selected.MaLoai);
-                this.spDAO.AddSanPham(this.sanpham);
-                this.spDAO.SubmitChanges();
+                this.sanphamBUS.AddSanPham(new SanPhamDTO
+                {
+                    MaSP = int.Parse(this.tbxMaSanPham.Text),
+                    TenSP = this.tbxTenSanPham.Text,
+                    LoaiSP = selected,
+                    SoLuongTon = int.Parse(this.tbxSoLuongTon.Text)
+                });
             }
             else
             {
-                SanPham updateSanPham = this.spDAO.GetSanPham(this.sanpham.MaSP);
-                updateSanPham.TenSP = tbxTenSanPham.Text;
-                updateSanPham.SoLuongTon = int.Parse(tbxSoLuongTon.Text);
-                updateSanPham.LoaiSanPham = this.loaiDAO.GetLoaiSP(selected.MaLoai);
-                this.spDAO.SubmitChanges();
+                this.sanphamBUS.EditSanPham(new SanPhamDTO
+                {
+                    MaSP = this.sanpham.MaSP,
+                    LoaiSP = selected,
+                    TenSP = this.tbxTenSanPham.Text,
+                    SoLuongTon = int.Parse(this.tbxSoLuongTon.Text)
+                });
             }
+
             this.Close();
         }
     }

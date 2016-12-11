@@ -33,10 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +67,23 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HoaDonDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HoaDonDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="HoaDonReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HoaDonReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InHoaDon.Designer.cs">
+      <DependentUpon>InHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoaiSP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +104,13 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HoaDonReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>HoaDonReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InHoaDon.resx">
+      <DependentUpon>InHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoaiSP.resx">
       <DependentUpon>LoaiSP.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,6 +127,17 @@
     <EmbeddedResource Include="ThemSuaSP.resx">
       <DependentUpon>ThemSuaSP.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="HoaDonDS.xsc">
+      <DependentUpon>HoaDonDS.xsd</DependentUpon>
+    </None>
+    <None Include="HoaDonDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>HoaDonDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="HoaDonDS.xss">
+      <DependentUpon>HoaDonDS.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -122,9 +164,9 @@
       <Project>{c71e27c9-b2d9-44d9-8f50-b18fd924c213}</Project>
       <Name>SE.DAO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SE.TAO\SE.TAO.csproj">
-      <Project>{d8077e90-0117-4b42-bf64-cd1ed4f4802b}</Project>
-      <Name>SE.TAO</Name>
+    <ProjectReference Include="..\SE.DTO\SE.DTO.csproj">
+      <Project>{F7AEDE03-9159-4938-AC5B-8A7140D0F8EC}</Project>
+      <Name>SE.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Coin-us-dollar-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

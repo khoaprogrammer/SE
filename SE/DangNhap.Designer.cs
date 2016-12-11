@@ -1,7 +1,16 @@
 ﻿namespace SE
 {
-    partial class DangNhap
+    public partial class DangNhap
     {
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxTenDangNhap;
+        private System.Windows.Forms.TextBox tbxMatKhau;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnHuy;
+        private System.Windows.Forms.Button btnDangNhap;
+        private System.Windows.Forms.Label lbeError;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -13,10 +22,11 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -65,7 +75,7 @@
             this.tbxTenDangNhap.Location = new System.Drawing.Point(208, 9);
             this.tbxTenDangNhap.Name = "tbxTenDangNhap";
             this.tbxTenDangNhap.Size = new System.Drawing.Size(131, 21);
-            this.tbxTenDangNhap.TabIndex = 1;
+            this.tbxTenDangNhap.TabIndex = 0;
             // 
             // tbxMatKhau
             // 
@@ -101,9 +111,10 @@
             this.btnDangNhap.Location = new System.Drawing.Point(183, 82);
             this.btnDangNhap.Name = "btnDangNhap";
             this.btnDangNhap.Size = new System.Drawing.Size(75, 23);
-            this.btnDangNhap.TabIndex = 3;
+            this.btnDangNhap.TabIndex = 2;
             this.btnDangNhap.Text = "Đăng nhập";
             this.btnDangNhap.UseVisualStyleBackColor = true;
+            this.btnDangNhap.Click += new System.EventHandler(this.ButtonDangNhap_Click);
             // 
             // lbeError
             // 
@@ -129,8 +140,12 @@
             this.Controls.Add(this.tbxTenDangNhap);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.KeyPreview = true;
             this.Name = "DangNhap";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DangNhap";
+            this.Load += new System.EventHandler(this.DangNhap_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DangNhap_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -138,14 +153,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbxTenDangNhap;
-        private System.Windows.Forms.TextBox tbxMatKhau;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btnHuy;
-        private System.Windows.Forms.Button btnDangNhap;
-        private System.Windows.Forms.Label lbeError;
     }
 }

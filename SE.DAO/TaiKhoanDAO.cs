@@ -1,19 +1,16 @@
-﻿using SE.TAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SE.DAO
+﻿namespace SE.DAO
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using DTO;
+
     public class TaiKhoanDAO
     {
         private SEDataContext context;
 
         public TaiKhoanDAO()
         {
-            this.context = Global.DataContext;
+            this.context = new SEDataContext(Global.ConnectionString);
         }
 
         public List<TaiKhoan> GetDSTaiKhoan()
@@ -26,18 +23,26 @@ namespace SE.DAO
             return this.context.TaiKhoans.FirstOrDefault(x => x.Username.Equals(username));
         }
 
+        public TaiKhoan GetTaiKhoan(int masoNV)
+        {
+            return this.context.TaiKhoans.First(x => x.MaNV == masoNV);
+        }
+
+        public bool TonTaiTaiKhoan(string username)
+        {
+            return this.context.TaiKhoans.Any(x => x.Username.ToString().Equals(username));
+        }
+
         public void AddTaiKhoan(TaiKhoan tk)
         {
             this.context.TaiKhoans.InsertOnSubmit(tk);
+            this.context.SubmitChanges();
         }
 
-        public void DeleteTaiKhoan(TaiKhoan tk)
+        public void DeleteTaiKhoan(string username)
         {
-            this.context.TaiKhoans.DeleteOnSubmit(tk);
-        }
-
-        public void SubmitChanges()
-        {
+            TaiKhoan delete = this.context.TaiKhoans.First(x => x.Username.Equals(username));
+            this.context.TaiKhoans.DeleteOnSubmit(delete);
             this.context.SubmitChanges();
         }
     }

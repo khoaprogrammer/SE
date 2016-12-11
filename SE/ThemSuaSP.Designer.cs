@@ -1,7 +1,39 @@
 ﻿namespace SE
 {
-    partial class ThemSuaSP
+    public partial class ThemSuaSP
     {
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbxLoaiSanPham;
+        private System.Windows.Forms.TextBox tbxSoLuongTon;
+        private System.Windows.Forms.TextBox tbxTenSanPham;
+        private System.Windows.Forms.TextBox tbxMaSanPham;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ImageList imgIcon;
+        private System.Windows.Forms.GroupBox groupChiTietSP;
+        private System.Windows.Forms.Button btnXoaChiTiet;
+        private System.Windows.Forms.Button btnThemChiTiet;
+        private System.Windows.Forms.TextBox tbxSoLuongTonCT;
+        private System.Windows.Forms.TextBox tbxKichThuoc;
+        private System.Windows.Forms.TextBox tbxMauSac;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnSuaChiTiet;
+        private BrightIdeasSoftware.FastObjectListView lstvDSChiTiet;
+        private System.Windows.Forms.Button btnLuu;
+        private System.Windows.Forms.Button btnHuy;
+        private System.Windows.Forms.Button button6;
+        private BrightIdeasSoftware.OLVColumn olvColumn1;
+        private BrightIdeasSoftware.OLVColumn olvColumn2;
+        private BrightIdeasSoftware.OLVColumn olvColumn3;
+        private BrightIdeasSoftware.OLVColumn olvColumn4;
+        private System.Windows.Forms.TextBox tbxDonGia;
+        private System.Windows.Forms.Label label8;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -13,10 +45,11 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -45,7 +78,7 @@
             this.btnXoaChiTiet = new System.Windows.Forms.Button();
             this.btnThemChiTiet = new System.Windows.Forms.Button();
             this.tbxDonGia = new System.Windows.Forms.TextBox();
-            this.tbxSoLuongTon_CT = new System.Windows.Forms.TextBox();
+            this.tbxSoLuongTonCT = new System.Windows.Forms.TextBox();
             this.tbxKichThuoc = new System.Windows.Forms.TextBox();
             this.tbxMauSac = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -174,7 +207,7 @@
             this.groupChiTietSP.Controls.Add(this.btnXoaChiTiet);
             this.groupChiTietSP.Controls.Add(this.btnThemChiTiet);
             this.groupChiTietSP.Controls.Add(this.tbxDonGia);
-            this.groupChiTietSP.Controls.Add(this.tbxSoLuongTon_CT);
+            this.groupChiTietSP.Controls.Add(this.tbxSoLuongTonCT);
             this.groupChiTietSP.Controls.Add(this.tbxKichThuoc);
             this.groupChiTietSP.Controls.Add(this.tbxMauSac);
             this.groupChiTietSP.Controls.Add(this.label8);
@@ -196,7 +229,7 @@
             this.btnSuaChiTiet.TabIndex = 2;
             this.btnSuaChiTiet.Text = "Sửa";
             this.btnSuaChiTiet.UseVisualStyleBackColor = true;
-            this.btnSuaChiTiet.Click += new System.EventHandler(this.btnSuaChiTiet_Click);
+            this.btnSuaChiTiet.Click += new System.EventHandler(this.ButtonSuaChiTiet_Click);
             // 
             // btnXoaChiTiet
             // 
@@ -206,7 +239,7 @@
             this.btnXoaChiTiet.TabIndex = 2;
             this.btnXoaChiTiet.Text = "Xóa";
             this.btnXoaChiTiet.UseVisualStyleBackColor = true;
-            this.btnXoaChiTiet.Click += new System.EventHandler(this.btnXoaChiTiet_Click);
+            this.btnXoaChiTiet.Click += new System.EventHandler(this.ButtonXoaChiTiet_Click);
             // 
             // btnThemChiTiet
             // 
@@ -216,7 +249,7 @@
             this.btnThemChiTiet.TabIndex = 2;
             this.btnThemChiTiet.Text = "Thêm";
             this.btnThemChiTiet.UseVisualStyleBackColor = true;
-            this.btnThemChiTiet.Click += new System.EventHandler(this.btnThemChiTiet_Click);
+            this.btnThemChiTiet.Click += new System.EventHandler(this.ButtonThemChiTiet_Click);
             // 
             // tbxDonGia
             // 
@@ -227,10 +260,10 @@
             // 
             // tbxSoLuongTon_CT
             // 
-            this.tbxSoLuongTon_CT.Location = new System.Drawing.Point(82, 105);
-            this.tbxSoLuongTon_CT.Name = "tbxSoLuongTon_CT";
-            this.tbxSoLuongTon_CT.Size = new System.Drawing.Size(92, 20);
-            this.tbxSoLuongTon_CT.TabIndex = 1;
+            this.tbxSoLuongTonCT.Location = new System.Drawing.Point(82, 105);
+            this.tbxSoLuongTonCT.Name = "tbxSoLuongTon_CT";
+            this.tbxSoLuongTonCT.Size = new System.Drawing.Size(92, 20);
+            this.tbxSoLuongTonCT.TabIndex = 1;
             // 
             // tbxKichThuoc
             // 
@@ -315,7 +348,7 @@
             this.lstvDSChiTiet.UseCompatibleStateImageBehavior = false;
             this.lstvDSChiTiet.View = System.Windows.Forms.View.Details;
             this.lstvDSChiTiet.VirtualMode = true;
-            this.lstvDSChiTiet.SelectedIndexChanged += new System.EventHandler(this.lstvDSChiTiet_SelectedIndexChanged);
+            this.lstvDSChiTiet.SelectedIndexChanged += new System.EventHandler(this.ListDSChiTiet_SelectedIndexChanged);
             // 
             // olvColumn1
             // 
@@ -350,7 +383,7 @@
             this.btnLuu.TabIndex = 3;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = true;
-            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
+            this.btnLuu.Click += new System.EventHandler(this.ButtonLuu_Click);
             // 
             // btnHuy
             // 
@@ -360,7 +393,7 @@
             this.btnHuy.TabIndex = 3;
             this.btnHuy.Text = "Hủy";
             this.btnHuy.UseVisualStyleBackColor = true;
-            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
+            this.btnHuy.Click += new System.EventHandler(this.ButtonHuy_Click);
             // 
             // ThemSuaSP
             // 
@@ -373,8 +406,8 @@
             this.Controls.Add(this.groupChiTietSP);
             this.Controls.Add(this.groupBox1);
             this.Name = "ThemSuaSP";
-            this.Text = "ThemSuaSP";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ThemSuaSP_FormClosing);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Quản lý sản phẩm";
             this.Load += new System.EventHandler(this.ThemSuaSP_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -387,37 +420,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbxLoaiSanPham;
-        private System.Windows.Forms.TextBox tbxSoLuongTon;
-        private System.Windows.Forms.TextBox tbxTenSanPham;
-        private System.Windows.Forms.TextBox tbxMaSanPham;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ImageList imgIcon;
-        private System.Windows.Forms.GroupBox groupChiTietSP;
-        private System.Windows.Forms.Button btnXoaChiTiet;
-        private System.Windows.Forms.Button btnThemChiTiet;
-        private System.Windows.Forms.TextBox tbxSoLuongTon_CT;
-        private System.Windows.Forms.TextBox tbxKichThuoc;
-        private System.Windows.Forms.TextBox tbxMauSac;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnSuaChiTiet;
-        private BrightIdeasSoftware.FastObjectListView lstvDSChiTiet;
-        private System.Windows.Forms.Button btnLuu;
-        private System.Windows.Forms.Button btnHuy;
-        private System.Windows.Forms.Button button6;
-        private BrightIdeasSoftware.OLVColumn olvColumn1;
-        private BrightIdeasSoftware.OLVColumn olvColumn2;
-        private BrightIdeasSoftware.OLVColumn olvColumn3;
-        private BrightIdeasSoftware.OLVColumn olvColumn4;
-        private System.Windows.Forms.TextBox tbxDonGia;
-        private System.Windows.Forms.Label label8;
     }
 }

@@ -1,38 +1,32 @@
-﻿using SE.TAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SE.DAO
+﻿namespace SE.DAO
 {
+    using System.Linq;
+    using DTO;
+
     public class ThongTinSanPhamDAO
     {
         private SEDataContext context;
 
         public ThongTinSanPhamDAO()
         {
-            this.context = Global.DataContext;
+            this.context = new SEDataContext(Global.ConnectionString);
         }
 
-        public ThongTinSanPham GetThongTinSP(int maSP, string mausac, string kichthuoc)
+        public ThongTinSanPham GetThongTinSP(int masoSP, string mausac, string kichthuoc)
         {
-            return this.context.ThongTinSanPhams.First(x => x.MaSanPham == maSP && x.MauSac.Equals(mausac) && x.KichThuoc.Equals(kichthuoc));
+            return this.context.ThongTinSanPhams.First(x => x.MaSP == masoSP && x.MauSac.Equals(mausac) && x.KichThuoc.Equals(kichthuoc));
         }
 
         public void AddThongTinSP(ThongTinSanPham tt)
         {
             this.context.ThongTinSanPhams.InsertOnSubmit(tt);
+            this.context.SubmitChanges();
         }
 
-        public void DeleteThongTinSP(ThongTinSanPham tt)
+        public void DeleteThongTinSP(int masoSP, string mausac, string kichthuoc)
         {
+            ThongTinSanPham tt = this.context.ThongTinSanPhams.First(x => x.MaSP == masoSP && x.MauSac.Equals(mausac) && x.KichThuoc.Equals(kichthuoc));
             this.context.ThongTinSanPhams.DeleteOnSubmit(tt);
-        }
-
-        public void SubmitChanges()
-        {
             this.context.SubmitChanges();
         }
     }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SE.TAO")]
+[assembly: AssemblyTitle("SE.DTO")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SE.TAO")]
+[assembly: AssemblyProduct("SE.DTO")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d8077e90-0117-4b42-bf64-cd1ed4f4802b")]
+[assembly: Guid("f7aede03-9159-4938-ac5b-8a7140d0f8ec")]
 
 // Version information for an assembly consists of the following four values:
 //

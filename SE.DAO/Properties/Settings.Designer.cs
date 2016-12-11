@@ -33,5 +33,16 @@ namespace SE.DAO.Properties {
                 return ((string)(this["SEConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-UUV7A6H\\SQLEXPRESS;Initial Catalog=SE;Integrated Security=Tru" +
+            "e;Encrypt=False;TrustServerCertificate=True")]
+        public string SEConnectionString1 {
+            get {
+                return ((string)(this["SEConnectionString1"]));
+            }
+        }
     }
 }

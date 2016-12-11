@@ -1,7 +1,23 @@
 ﻿namespace SE
 {
-    partial class LoaiSP
+    public partial class LoaiSP
     {
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Button btnXoa;
+        private System.Windows.Forms.Button btnSua;
+        private System.Windows.Forms.ListBox lstbLoaiSP;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lbeSLSanPham;
+        private System.Windows.Forms.TextBox tbxMaLoai;
+        private System.Windows.Forms.TextBox tbxTenLoai;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox picLoaiSP;
+        private System.Windows.Forms.OpenFileDialog fileLoaiSPIcon;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -13,10 +29,11 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -35,13 +52,13 @@
             this.btnSua = new System.Windows.Forms.Button();
             this.lstbLoaiSP = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbxTenLoai = new System.Windows.Forms.TextBox();
-            this.tbxMaLoai = new System.Windows.Forms.TextBox();
-            this.lbeSLSanPham = new System.Windows.Forms.Label();
             this.picLoaiSP = new System.Windows.Forms.PictureBox();
+            this.lbeSLSanPham = new System.Windows.Forms.Label();
+            this.tbxMaLoai = new System.Windows.Forms.TextBox();
+            this.tbxTenLoai = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.fileLoaiSPIcon = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -93,7 +110,7 @@
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            this.btnThem.Click += new System.EventHandler(this.ButtonThem_Click);
             // 
             // btnXoa
             // 
@@ -105,7 +122,7 @@
             this.btnXoa.TabIndex = 0;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = true;
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
+            this.btnXoa.Click += new System.EventHandler(this.ButtonXoa_Click);
             // 
             // btnSua
             // 
@@ -117,7 +134,7 @@
             this.btnSua.TabIndex = 0;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
-            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
+            this.btnSua.Click += new System.EventHandler(this.ButtonSua_Click);
             // 
             // lstbLoaiSP
             // 
@@ -128,7 +145,7 @@
             this.tableLayoutPanel1.SetRowSpan(this.lstbLoaiSP, 2);
             this.lstbLoaiSP.Size = new System.Drawing.Size(192, 200);
             this.lstbLoaiSP.TabIndex = 1;
-            this.lstbLoaiSP.SelectedIndexChanged += new System.EventHandler(this.lstbLoaiSP_SelectedIndexChanged);
+            this.lstbLoaiSP.SelectedIndexChanged += new System.EventHandler(this.ListLoaiSP_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -145,46 +162,17 @@
             this.panel1.Size = new System.Drawing.Size(214, 161);
             this.panel1.TabIndex = 2;
             // 
-            // label1
+            // picLoaiSP
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Mã loại:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 43);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Tên loại:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Số lượng sản phẩm:";
-            // 
-            // tbxTenLoai
-            // 
-            this.tbxTenLoai.Location = new System.Drawing.Point(65, 40);
-            this.tbxTenLoai.Name = "tbxTenLoai";
-            this.tbxTenLoai.Size = new System.Drawing.Size(134, 20);
-            this.tbxTenLoai.TabIndex = 1;
-            // 
-            // tbxMaLoai
-            // 
-            this.tbxMaLoai.Location = new System.Drawing.Point(65, 14);
-            this.tbxMaLoai.Name = "tbxMaLoai";
-            this.tbxMaLoai.Size = new System.Drawing.Size(134, 20);
-            this.tbxMaLoai.TabIndex = 1;
+            this.picLoaiSP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picLoaiSP.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picLoaiSP.Location = new System.Drawing.Point(18, 99);
+            this.picLoaiSP.Name = "picLoaiSP";
+            this.picLoaiSP.Size = new System.Drawing.Size(50, 50);
+            this.picLoaiSP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picLoaiSP.TabIndex = 3;
+            this.picLoaiSP.TabStop = false;
+            this.picLoaiSP.Click += new System.EventHandler(this.PictureLoaiSP_Click);
             // 
             // lbeSLSanPham
             // 
@@ -196,17 +184,46 @@
             this.lbeSLSanPham.TabIndex = 2;
             this.lbeSLSanPham.Text = "label4";
             // 
-            // picLoaiSP
+            // tbxMaLoai
             // 
-            this.picLoaiSP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picLoaiSP.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picLoaiSP.Location = new System.Drawing.Point(18, 99);
-            this.picLoaiSP.Name = "picLoaiSP";
-            this.picLoaiSP.Size = new System.Drawing.Size(50, 50);
-            this.picLoaiSP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLoaiSP.TabIndex = 3;
-            this.picLoaiSP.TabStop = false;
-            this.picLoaiSP.Click += new System.EventHandler(this.picLoaiSP_Click);
+            this.tbxMaLoai.Location = new System.Drawing.Point(65, 14);
+            this.tbxMaLoai.Name = "tbxMaLoai";
+            this.tbxMaLoai.Size = new System.Drawing.Size(134, 20);
+            this.tbxMaLoai.TabIndex = 1;
+            // 
+            // tbxTenLoai
+            // 
+            this.tbxTenLoai.Location = new System.Drawing.Point(65, 40);
+            this.tbxTenLoai.Name = "tbxTenLoai";
+            this.tbxTenLoai.Size = new System.Drawing.Size(134, 20);
+            this.tbxTenLoai.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 74);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(101, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Số lượng sản phẩm:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Tên loại:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Mã loại:";
             // 
             // fileLoaiSPIcon
             // 
@@ -219,7 +236,8 @@
             this.ClientSize = new System.Drawing.Size(418, 206);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "LoaiSP";
-            this.Text = "LoaiSP";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Loại sản phẩm";
             this.Load += new System.EventHandler(this.LoaiSP_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -231,21 +249,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button btnThem;
-        private System.Windows.Forms.Button btnXoa;
-        private System.Windows.Forms.Button btnSua;
-        private System.Windows.Forms.ListBox lstbLoaiSP;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lbeSLSanPham;
-        private System.Windows.Forms.TextBox tbxMaLoai;
-        private System.Windows.Forms.TextBox tbxTenLoai;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox picLoaiSP;
-        private System.Windows.Forms.OpenFileDialog fileLoaiSPIcon;
     }
 }

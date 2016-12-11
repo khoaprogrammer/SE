@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SE.TAO
+namespace SE.DAO
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -57,7 +57,7 @@ namespace SE.TAO
     #endregion
 		
 		public SEDataContext() : 
-				base(global::SE.TAO.Properties.Settings.Default.SEConnectionString2, mappingSource)
+				base(global::SE.DAO.Properties.Settings.Default.SEConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -163,7 +163,7 @@ namespace SE.TAO
 		
 		private string _MauSac;
 		
-		private int _MaSanPham;
+		private int _MaSP;
 		
 		private int _SoLuong;
 		
@@ -185,8 +185,8 @@ namespace SE.TAO
     partial void OnKichThuocChanged();
     partial void OnMauSacChanging(string value);
     partial void OnMauSacChanged();
-    partial void OnMaSanPhamChanging(int value);
-    partial void OnMaSanPhamChanged();
+    partial void OnMaSPChanging(int value);
+    partial void OnMaSPChanged();
     partial void OnSoLuongChanging(int value);
     partial void OnSoLuongChanged();
     partial void OnDonGiaChanging(decimal value);
@@ -225,7 +225,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string KichThuoc
 		{
 			get
@@ -249,7 +249,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string MauSac
 		{
 			get
@@ -273,26 +273,26 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaSanPham", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int MaSanPham
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaSP", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int MaSP
 		{
 			get
 			{
-				return this._MaSanPham;
+				return this._MaSP;
 			}
 			set
 			{
-				if ((this._MaSanPham != value))
+				if ((this._MaSP != value))
 				{
 					if (this._SanPham.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnMaSanPhamChanging(value);
+					this.OnMaSPChanging(value);
 					this.SendPropertyChanging();
-					this._MaSanPham = value;
-					this.SendPropertyChanged("MaSanPham");
-					this.OnMaSanPhamChanged();
+					this._MaSP = value;
+					this.SendPropertyChanged("MaSP");
+					this.OnMaSPChanged();
 				}
 			}
 		}
@@ -407,7 +407,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ChiTietHoaDon", Storage="_SanPham", ThisKey="MaSanPham", OtherKey="MaSP", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ChiTietHoaDon", Storage="_SanPham", ThisKey="MaSP", OtherKey="MaSP", IsForeignKey=true)]
 		public SanPham SanPham
 		{
 			get
@@ -430,11 +430,11 @@ namespace SE.TAO
 					if ((value != null))
 					{
 						value.ChiTietHoaDons.Add(this);
-						this._MaSanPham = value.MaSP;
+						this._MaSP = value.MaSP;
 					}
 					else
 					{
-						this._MaSanPham = default(int);
+						this._MaSP = default(int);
 					}
 					this.SendPropertyChanged("SanPham");
 				}
@@ -493,7 +493,7 @@ namespace SE.TAO
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string MauSac
 		{
 			get
@@ -513,7 +513,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string KichThuoc
 		{
 			get
@@ -624,6 +624,12 @@ namespace SE.TAO
 		
 		private string _DienThoaiKH;
 		
+		private System.Nullable<decimal> _TongTienTruocThue;
+		
+		private System.Nullable<decimal> _TongTienThue;
+		
+		private System.Nullable<decimal> _TongTienSauThue;
+		
 		private EntitySet<ChiTietHoaDon> _ChiTietHoaDons;
 		
 		private EntityRef<NhanVien> _NhanVien;
@@ -646,6 +652,12 @@ namespace SE.TAO
     partial void OnDiaChiKHChanged();
     partial void OnDienThoaiKHChanging(string value);
     partial void OnDienThoaiKHChanged();
+    partial void OnTongTienTruocThueChanging(System.Nullable<decimal> value);
+    partial void OnTongTienTruocThueChanged();
+    partial void OnTongTienThueChanging(System.Nullable<decimal> value);
+    partial void OnTongTienThueChanged();
+    partial void OnTongTienSauThueChanging(System.Nullable<decimal> value);
+    partial void OnTongTienSauThueChanged();
     #endregion
 		
 		public HoaDon()
@@ -799,6 +811,66 @@ namespace SE.TAO
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TongTienTruocThue", DbType="Money")]
+		public System.Nullable<decimal> TongTienTruocThue
+		{
+			get
+			{
+				return this._TongTienTruocThue;
+			}
+			set
+			{
+				if ((this._TongTienTruocThue != value))
+				{
+					this.OnTongTienTruocThueChanging(value);
+					this.SendPropertyChanging();
+					this._TongTienTruocThue = value;
+					this.SendPropertyChanged("TongTienTruocThue");
+					this.OnTongTienTruocThueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TongTienThue", DbType="Money")]
+		public System.Nullable<decimal> TongTienThue
+		{
+			get
+			{
+				return this._TongTienThue;
+			}
+			set
+			{
+				if ((this._TongTienThue != value))
+				{
+					this.OnTongTienThueChanging(value);
+					this.SendPropertyChanging();
+					this._TongTienThue = value;
+					this.SendPropertyChanged("TongTienThue");
+					this.OnTongTienThueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TongTienSauThue", DbType="Money")]
+		public System.Nullable<decimal> TongTienSauThue
+		{
+			get
+			{
+				return this._TongTienSauThue;
+			}
+			set
+			{
+				if ((this._TongTienSauThue != value))
+				{
+					this.OnTongTienSauThueChanging(value);
+					this.SendPropertyChanging();
+					this._TongTienSauThue = value;
+					this.SendPropertyChanged("TongTienSauThue");
+					this.OnTongTienSauThueChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="HoaDon_ChiTietHoaDon", Storage="_ChiTietHoaDons", ThisKey="MaHD", OtherKey="MaHD")]
 		public EntitySet<ChiTietHoaDon> ChiTietHoaDons
 		{
@@ -927,7 +999,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenLoai", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenLoai", DbType="NText", UpdateCheck=UpdateCheck.Never)]
 		public string TenLoai
 		{
 			get
@@ -1100,7 +1172,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoTen", DbType="VarChar(1024) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HoTen", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string HoTen
 		{
 			get
@@ -1140,7 +1212,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaChi", DbType="VarChar(1024) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaChi", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string DiaChi
 		{
 			get
@@ -1220,7 +1292,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoiLamViec", DbType="VarChar(1024) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoiLamViec", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string NoiLamViec
 		{
 			get
@@ -1240,7 +1312,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChucVu", DbType="VarChar(1024) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChucVu", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string ChucVu
 		{
 			get
@@ -1426,7 +1498,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenSP", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TenSP", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
 		public string TenSP
 		{
 			get
@@ -1466,7 +1538,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ChiTietHoaDon", Storage="_ChiTietHoaDons", ThisKey="MaSP", OtherKey="MaSanPham")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ChiTietHoaDon", Storage="_ChiTietHoaDons", ThisKey="MaSP", OtherKey="MaSP")]
 		public EntitySet<ChiTietHoaDon> ChiTietHoaDons
 		{
 			get
@@ -1479,7 +1551,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ThongTinSanPham", Storage="_ThongTinSanPhams", ThisKey="MaSP", OtherKey="MaSanPham")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ThongTinSanPham", Storage="_ThongTinSanPhams", ThisKey="MaSP", OtherKey="MaSP")]
 		public EntitySet<ThongTinSanPham> ThongTinSanPhams
 		{
 			get
@@ -1579,6 +1651,8 @@ namespace SE.TAO
 		
 		private string _Username;
 		
+		private int _MaNV;
+		
 		private string _Password;
 		
 		private EntitySet<NhanVien> _NhanViens;
@@ -1589,6 +1663,8 @@ namespace SE.TAO
     partial void OnCreated();
     partial void OnUsernameChanging(string value);
     partial void OnUsernameChanged();
+    partial void OnMaNVChanging(int value);
+    partial void OnMaNVChanged();
     partial void OnPasswordChanging(string value);
     partial void OnPasswordChanged();
     #endregion
@@ -1615,6 +1691,26 @@ namespace SE.TAO
 					this._Username = value;
 					this.SendPropertyChanged("Username");
 					this.OnUsernameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaNV", DbType="Int NOT NULL")]
+		public int MaNV
+		{
+			get
+			{
+				return this._MaNV;
+			}
+			set
+			{
+				if ((this._MaNV != value))
+				{
+					this.OnMaNVChanging(value);
+					this.SendPropertyChanging();
+					this._MaNV = value;
+					this.SendPropertyChanged("MaNV");
+					this.OnMaNVChanged();
 				}
 			}
 		}
@@ -1691,30 +1787,30 @@ namespace SE.TAO
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
+		private int _MaSP;
+		
 		private string _KichThuoc;
 		
 		private string _MauSac;
-		
-		private int _MaSanPham;
 		
 		private System.Nullable<int> _SoLuongTon;
 		
 		private System.Nullable<decimal> _DonGia;
 		
-		private EntityRef<ChiTietSanPham> _ChiTietSanPham;
-		
 		private EntityRef<SanPham> _SanPham;
+		
+		private EntityRef<ChiTietSanPham> _ChiTietSanPham;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
+    partial void OnMaSPChanging(int value);
+    partial void OnMaSPChanged();
     partial void OnKichThuocChanging(string value);
     partial void OnKichThuocChanged();
     partial void OnMauSacChanging(string value);
     partial void OnMauSacChanged();
-    partial void OnMaSanPhamChanging(int value);
-    partial void OnMaSanPhamChanged();
     partial void OnSoLuongTonChanging(System.Nullable<int> value);
     partial void OnSoLuongTonChanged();
     partial void OnDonGiaChanging(System.Nullable<decimal> value);
@@ -1723,12 +1819,36 @@ namespace SE.TAO
 		
 		public ThongTinSanPham()
 		{
-			this._ChiTietSanPham = default(EntityRef<ChiTietSanPham>);
 			this._SanPham = default(EntityRef<SanPham>);
+			this._ChiTietSanPham = default(EntityRef<ChiTietSanPham>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaSP", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int MaSP
+		{
+			get
+			{
+				return this._MaSP;
+			}
+			set
+			{
+				if ((this._MaSP != value))
+				{
+					if (this._SanPham.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaSPChanging(value);
+					this.SendPropertyChanging();
+					this._MaSP = value;
+					this.SendPropertyChanged("MaSP");
+					this.OnMaSPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KichThuoc", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string KichThuoc
 		{
 			get
@@ -1752,7 +1872,7 @@ namespace SE.TAO
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MauSac", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string MauSac
 		{
 			get
@@ -1772,30 +1892,6 @@ namespace SE.TAO
 					this._MauSac = value;
 					this.SendPropertyChanged("MauSac");
 					this.OnMauSacChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaSanPham", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int MaSanPham
-		{
-			get
-			{
-				return this._MaSanPham;
-			}
-			set
-			{
-				if ((this._MaSanPham != value))
-				{
-					if (this._SanPham.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMaSanPhamChanging(value);
-					this.SendPropertyChanging();
-					this._MaSanPham = value;
-					this.SendPropertyChanged("MaSanPham");
-					this.OnMaSanPhamChanged();
 				}
 			}
 		}
@@ -1840,6 +1936,40 @@ namespace SE.TAO
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ThongTinSanPham", Storage="_SanPham", ThisKey="MaSP", OtherKey="MaSP", IsForeignKey=true)]
+		public SanPham SanPham
+		{
+			get
+			{
+				return this._SanPham.Entity;
+			}
+			set
+			{
+				SanPham previousValue = this._SanPham.Entity;
+				if (((previousValue != value) 
+							|| (this._SanPham.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SanPham.Entity = null;
+						previousValue.ThongTinSanPhams.Remove(this);
+					}
+					this._SanPham.Entity = value;
+					if ((value != null))
+					{
+						value.ThongTinSanPhams.Add(this);
+						this._MaSP = value.MaSP;
+					}
+					else
+					{
+						this._MaSP = default(int);
+					}
+					this.SendPropertyChanged("SanPham");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ChiTietSanPham_ThongTinSanPham", Storage="_ChiTietSanPham", ThisKey="KichThuoc,MauSac", OtherKey="KichThuoc,MauSac", IsForeignKey=true)]
 		public ChiTietSanPham ChiTietSanPham
 		{
@@ -1872,40 +2002,6 @@ namespace SE.TAO
 						this._MauSac = default(string);
 					}
 					this.SendPropertyChanged("ChiTietSanPham");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SanPham_ThongTinSanPham", Storage="_SanPham", ThisKey="MaSanPham", OtherKey="MaSP", IsForeignKey=true)]
-		public SanPham SanPham
-		{
-			get
-			{
-				return this._SanPham.Entity;
-			}
-			set
-			{
-				SanPham previousValue = this._SanPham.Entity;
-				if (((previousValue != value) 
-							|| (this._SanPham.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SanPham.Entity = null;
-						previousValue.ThongTinSanPhams.Remove(this);
-					}
-					this._SanPham.Entity = value;
-					if ((value != null))
-					{
-						value.ThongTinSanPhams.Add(this);
-						this._MaSanPham = value.MaSP;
-					}
-					else
-					{
-						this._MaSanPham = default(int);
-					}
-					this.SendPropertyChanged("SanPham");
 				}
 			}
 		}

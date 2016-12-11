@@ -1,84 +1,83 @@
-﻿using SE.TAO;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace SE
+﻿namespace SE
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using BUS;
+    using DTO;
+
     public partial class LoaiSP : Form
     {
-        private SEDataContext context;
         private string tmpPath;
+        private LoaiSPBUS loaiBUS;
+
         public LoaiSP()
         {
-            InitializeComponent();
-            this.context = new SEDataContext(Global.ConnectionString);
+            this.InitializeComponent();
+            this.loaiBUS = new LoaiSPBUS();
         }
 
         private void LoaiSP_Load(object sender, EventArgs e)
         {
-            this.lstbLoaiSP.Items.AddRange(this.context.LoaiSanPhams.ToArray());
+            this.lstbLoaiSP.Items.AddRange(this.loaiBUS.GetDSLoaiSP().ToArray());
             if (this.lstbLoaiSP.Items.Count > 0)
             {
                 this.lstbLoaiSP.SelectedIndex = 0;
             }
         }
 
-        private void lstbLoaiSP_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListLoaiSP_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoaiSanPham selected = (LoaiSanPham)this.lstbLoaiSP.SelectedItem;
-            tbxMaLoai.Text = selected.MaLoai.ToString();
-            tbxTenLoai.Text = selected.TenLoai;
-            lbeSLSanPham.Text = selected.SanPhams.Count.ToString();
-            Image img = selected.GetImage();
-            picLoaiSP.Image = img;
+            LoaiSPDTO selected = (LoaiSPDTO)this.lstbLoaiSP.SelectedItem;
+            this.tbxMaLoai.Text = selected.MaLoai.ToString();
+            this.tbxTenLoai.Text = selected.TenLoai;
+            this.lbeSLSanPham.Text = this.loaiBUS.GetDSSanPham(selected.MaLoai).Count.ToString();
+            Image img = this.loaiBUS.GetImage(selected.MaLoai);
+            this.picLoaiSP.Image = img;
         }
 
-        private void picLoaiSP_Click(object sender, EventArgs e)
+        private void PictureLoaiSP_Click(object sender, EventArgs e)
         {
-            fileLoaiSPIcon.ShowDialog();
-            tmpPath = fileLoaiSPIcon.FileName;
-            if (tmpPath != null)
+            this.fileLoaiSPIcon.ShowDialog();
+            this.tmpPath = this.fileLoaiSPIcon.FileName;
+            if (this.tmpPath != string.Empty)
             {
                 Image img;
-                using (var bmpTemp = new Bitmap(tmpPath))
+                using (var bmpTemp = new Bitmap(this.tmpPath))
                 {
                     img = new Bitmap(bmpTemp);
                 }
-                picLoaiSP.Image = img;
+
+                this.picLoaiSP.Image = img;
             }
             else
             {
-                picLoaiSP.Image = null;
+                this.picLoaiSP.Image = null;
             }
         }
 
-        private void btnThem_Click(object sender, EventArgs e)
+        private void ButtonThem_Click(object sender, EventArgs e)
         {
-            if (tbxMaLoai.Text.Equals(string.Empty) || tbxTenLoai.Text.Equals(string.Empty))
+            if (this.tbxMaLoai.Text.Equals(string.Empty) || this.tbxTenLoai.Text.Equals(string.Empty))
             {
                 return;
             }
-            int maLoai;
-            if (!int.TryParse(tbxMaLoai.Text, out maLoai))
+
+            int masoLoai;
+            if (!int.TryParse(this.tbxMaLoai.Text, out masoLoai))
             {
                 MessageBox.Show("Mã loại phải là số!");
                 return;
             }
-            if (this.context.LoaiSanPhams.Any(x => x.MaLoai == maLoai))
+
+            if (this.loaiBUS.TonTaiLoaiSP(int.Parse(this.tbxMaLoai.Text)))
             {
                 MessageBox.Show("Mã loại này đã tồn tại!");
                 return;
             }
-            this.context.LoaiSanPhams.InsertOnSubmit(new LoaiSanPham() { MaLoai = maLoai, TenLoai = tbxTenLoai.Text });
-            this.context.SubmitChanges();
+
+            this.loaiBUS.AddLoaiSP(new LoaiSPDTO() { MaLoai = masoLoai, TenLoai = this.tbxTenLoai.Text });
             if (this.tmpPath != null)
             {
                 string dirPath = Path.Combine(Environment.CurrentDirectory, "imgs/loaisp");
@@ -86,59 +85,63 @@ namespace SE
                 {
                     Directory.CreateDirectory(dirPath);
                 }
-                File.Copy(this.tmpPath, Path.Combine(Environment.CurrentDirectory, "imgs", "loaisp", maLoai.ToString() + ".png"), true);
+
+                File.Copy(this.tmpPath, Path.Combine(Environment.CurrentDirectory, "imgs", "loaisp", masoLoai.ToString() + ".png"), true);
                 this.tmpPath = null;
             }
+
             this.lstbLoaiSP.Items.Clear();
-            this.lstbLoaiSP.Items.AddRange(this.context.LoaiSanPhams.ToArray());
+            this.lstbLoaiSP.Items.AddRange(this.loaiBUS.GetDSLoaiSP().ToArray());
         }
 
-        private void btnXoa_Click(object sender, EventArgs e)
+        private void ButtonXoa_Click(object sender, EventArgs e)
         {
             if (this.lstbLoaiSP.SelectedItem == null)
             {
                 return;
             }
-            LoaiSanPham selected = (LoaiSanPham)this.lstbLoaiSP.SelectedItem;
+
+            LoaiSPDTO selected = (LoaiSPDTO)this.lstbLoaiSP.SelectedItem;
             var result = MessageBox.Show("Bạn có muốn xóa loại sản phẩm này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (selected.SanPhams.Count > 0)
+                if (this.loaiBUS.GetDSSanPham(selected.MaLoai).Count > 0)
                 {
                     MessageBox.Show("Đang tồn tại sản phẩm thuộc loại này!");
                     return;
                 }
-                LoaiSanPham deleteLoaiSP = this.context.LoaiSanPhams.First(x => x.MaLoai == selected.MaLoai);
-                this.context.LoaiSanPhams.DeleteOnSubmit(deleteLoaiSP);
-                this.context.SubmitChanges();
+
+                this.loaiBUS.DeleteLoaiSP(int.Parse(this.tbxMaLoai.Text));
             }
+
             this.lstbLoaiSP.Items.Clear();
-            this.lstbLoaiSP.Items.AddRange(this.context.LoaiSanPhams.ToArray());
+            this.lstbLoaiSP.Items.AddRange(this.loaiBUS.GetDSLoaiSP().ToArray());
         }
 
-        private void btnSua_Click(object sender, EventArgs e)
+        private void ButtonSua_Click(object sender, EventArgs e)
         {
             if (this.lstbLoaiSP.SelectedItem == null)
             {
                 return;
             }
-            LoaiSanPham selected = (LoaiSanPham)this.lstbLoaiSP.SelectedItem;
-            if (!tbxMaLoai.Text.Equals(selected.MaLoai.ToString()))
+
+            LoaiSPDTO selected = (LoaiSPDTO)this.lstbLoaiSP.SelectedItem;
+            if (!this.tbxMaLoai.Text.Equals(selected.MaLoai.ToString()))
             {
                 MessageBox.Show("Không được sửa mã loại!");
-                tbxMaLoai.Text = selected.MaLoai.ToString();
+                this.tbxMaLoai.Text = selected.MaLoai.ToString();
                 return;
             }
-            LoaiSanPham updateLoaiSP = this.context.LoaiSanPhams.First(x => x.MaLoai == selected.MaLoai);
-            updateLoaiSP.TenLoai = tbxTenLoai.Text;
-            this.context.SubmitChanges();
+
+            this.loaiBUS.EditLoaiSP(selected.MaLoai, this.tbxTenLoai.Text);
             if (this.tmpPath != null)
             {
                 string dirPath = Path.Combine(Environment.CurrentDirectory, "imgs/loaisp");
                 File.Copy(this.tmpPath, Path.Combine(dirPath, selected.MaLoai.ToString() + ".png"), true);
             }
+
             this.lstbLoaiSP.Items.Clear();
-            this.lstbLoaiSP.Items.AddRange(this.context.LoaiSanPhams.ToArray());
+            this.lstbLoaiSP.Items.AddRange(this.loaiBUS.GetDSLoaiSP().ToArray());
             this.lstbLoaiSP.SelectedIndex = 0;
         }
     }

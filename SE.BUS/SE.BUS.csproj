@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,13 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietHoaDonBUS.cs" />
+    <Compile Include="ChiTietSanPhamBUS.cs" />
+    <Compile Include="GioHangBUS.cs" />
+    <Compile Include="HoaDonBUS.cs" />
+    <Compile Include="LoaiSPBUS.cs" />
+    <Compile Include="NhanVienBUS.cs" />
     <Compile Include="SanPhamBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaiKhoanBUS.cs" />
+    <Compile Include="ThongTinSPBUS.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SE.TAO\SE.TAO.csproj">
-      <Project>{d8077e90-0117-4b42-bf64-cd1ed4f4802b}</Project>
-      <Name>SE.TAO</Name>
+    <ProjectReference Include="..\SE.DAO\SE.DAO.csproj">
+      <Project>{C71E27C9-B2D9-44D9-8F50-B18FD924C213}</Project>
+      <Name>SE.DAO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SE.DTO\SE.DTO.csproj">
+      <Project>{F7AEDE03-9159-4938-AC5B-8A7140D0F8EC}</Project>
+      <Name>SE.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

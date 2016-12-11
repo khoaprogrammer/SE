@@ -62,6 +62,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SanPhamDAO.cs" />
+    <Compile Include="SE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SE.dbml</DependentUpon>
+    </Compile>
     <Compile Include="TaiKhoanDAO.cs" />
     <Compile Include="ThongTinSanPhamDAO.cs" />
   </ItemGroup>
@@ -72,16 +77,26 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="SE.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>SE.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SE.TAO\SE.TAO.csproj">
-      <Project>{d8077e90-0117-4b42-bf64-cd1ed4f4802b}</Project>
-      <Name>SE.TAO</Name>
+    <ProjectReference Include="..\SE.DTO\SE.DTO.csproj">
+      <Project>{F7AEDE03-9159-4938-AC5B-8A7140D0F8EC}</Project>
+      <Name>SE.DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SE.dbml.layout">
+      <DependentUpon>SE.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
